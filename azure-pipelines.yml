@@ -9,12 +9,14 @@ trigger:
 pool:
   vmImage: windows-2019
 
+
 steps:
-- task: ArchiveFiles@2
-  displayName: 'Archive FunctionApp'
+- task: ArchiveFiles@2
+  displayName: 'Archive Files'
+  inputs:
+    rootFolderOrFile: '$(System.DefaultWorkingDirectory)'
+    includeRootFolder: false
+    
 
-
-- task: PublishPipelineArtifact@1
-  inputs:
-    targetPath: '$(Pipeline.Workspace)'
-    publishLocation: 'pipeline'
+- publish: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
+  artifact: drop
